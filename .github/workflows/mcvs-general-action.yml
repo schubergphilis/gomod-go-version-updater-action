@@ -13,7 +13,10 @@ jobs:
           - testing-type: lint-commit
           - testing-type: lint-git
           - testing-type: yamllint
-    runs-on: ubuntu-24.04
+    # lint-action runs zizmor in Docker, which ubuntu-slim does not have.
+    runs-on: >-
+      ${{ matrix.args.testing-type == 'lint-action' && 'ubuntu-26.04' ||
+      'ubuntu-slim' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
